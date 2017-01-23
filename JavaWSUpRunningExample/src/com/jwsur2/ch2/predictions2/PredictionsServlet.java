@@ -14,9 +14,6 @@ import javax.xml.ws.http.HTTPException;
 import org.json.JSONObject;
 import org.json.XML;
 
-import predictions2.Prediction;
-import predictions2.Predictions;
-
 public class PredictionsServlet extends HttpServlet {
 	
 	/**

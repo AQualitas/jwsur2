@@ -1,4 +1,4 @@
-package predictions2;
+package com.jwsur2.ch2.predictions2;
 
 import java.beans.XMLEncoder; // simple and effective
 import java.io.BufferedReader;

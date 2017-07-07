@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>JWSURCh3WADLPredictions3</groupId>
+  <artifactId>JWSURCh3WADLPredictions3</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <properties>
+  	<restdoc.directory>.</restdoc.directory>
+  </properties>
+  
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+		<plugin>
+		    <groupId>com.sun.jersey.contribs</groupId>
+		    <artifactId>maven-wadl-plugin</artifactId>
+		    <version>1.8</version>
+		    <executions>
+		        <execution>
+		            <id>generate</id>
+		            <goals>
+		                <goal>generate</goal>
+		            </goals>
+		            <phase>prepare-package</phase>
+		        </execution>
+		    </executions>
+		
+		    <configuration>
+		        <wadlFile>${restdoc.directory}/predictions.wadl</wadlFile>
+		        <formatWadlFile>true</formatWadlFile>
+		        <baseUri>http://localhost:8080/predictions3/resourcesP/</baseUri>
+		        <packagesResourceConfig>
+		            <param>src</param>
+		        </packagesResourceConfig>
+		        <wadlGenerators>
+		            <wadlGeneratorDescription>
+		                <className>com.sun.jersey.server.wadl.generators.WadlGeneratorApplicationDoc
+		                </className>
+<!-- 		                <properties>
+		                    <property>
+		                        <name>applicationDocsFile</name>
+		                        <value>${xsl.directory}/application-doc.xml</value>
+		                    </property>
+		                </properties>
+ -->		            </wadlGeneratorDescription>
+		            <wadlGeneratorDescription>
+		                <className>com.sun.jersey.server.wadl.generators.WadlGeneratorGrammarsSupport
+		                </className>
+<!-- 		                <properties>
+		                    <property>
+		                        <name>grammarsFile</name>
+		                        <value>${xsl.directory}/application-grammars.xml</value>
+		                    </property>
+		                </properties>
+ -->		            </wadlGeneratorDescription>
+<!-- 		        <wadlGeneratorDescription>
+		                <className>
+		                    com.atlassian.plugins.rest.doclet.generators.resourcedoc.AtlassianWadlGeneratorResourceDocSupport
+		                </className>
+		                <properties>
+		                    <property>
+		                        <name>resourceDocFile</name>
+		                        <value>${restdoc.directory}/resourcedoc.xml</value>
+		                    </property>
+		                </properties>
+		            </wadlGeneratorDescription>
+ -->		        
+ 				</wadlGenerators>
+		    </configuration>
+		</plugin>      
+    </plugins>
+  </build>
+  <dependencies>
+	<dependency>
+	    <groupId>com.sun.jersey.contribs</groupId>
+	    <artifactId>maven-wadl-plugin</artifactId>
+	    <version>1.19.4</version>
+	</dependency>
+  	
+  </dependencies>
+</project>

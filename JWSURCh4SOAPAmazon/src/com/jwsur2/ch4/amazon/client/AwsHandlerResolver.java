@@ -1,5 +1,6 @@
 package com.jwsur2.ch4.amazon.client; 
 
+import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,6 +45,10 @@ public class AwsHandlerResolver implements HandlerResolver {
 class AwsSoapHandler implements SOAPHandler<SOAPMessageContext> {
     private byte[ ] secretBytes;
     
+    // change this to redirect output if desired
+    private static PrintStream out = System.out;
+
+    
     public AwsSoapHandler(String awsSecretKey) {
 	secretBytes = getBytes(awsSecretKey);
     }
@@ -72,6 +77,7 @@ class AwsSoapHandler implements SOAPHandler<SOAPMessageContext> {
 		throw new RuntimeException("SOAPException thrown.", e);
 	    }
 	}
+	logToSystemOut(mCtx);
 	return true; // continue down the handler chain
     }
     
@@ -114,5 +120,32 @@ class AwsSoapHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 	catch(Exception e) { throw new RuntimeException(e); }
     }
+    
+    /*
+     * Check the MESSAGE_OUTBOUND_PROPERTY in the context
+     * to see if this is an outgoing or incoming message.
+     * Write a brief message to the print stream and
+     * output the message. The writeTo() method can throw
+     * SOAPException or IOException
+     */
+    private void logToSystemOut(SOAPMessageContext smc) {
+        Boolean outboundProperty = (Boolean)
+            smc.get (MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+
+        if (outboundProperty.booleanValue()) {
+            out.println("\nOutbound message:");
+        } else {
+            out.println("\nInbound message:");
+        }
+
+        SOAPMessage message = smc.getMessage();
+        try {
+            message.writeTo(out);
+            out.println("");   // just to add a newline
+        } catch (Exception e) {
+            out.println("Exception in handler: " + e);
+        }
+    }
+    
 }
 

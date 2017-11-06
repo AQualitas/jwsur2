@@ -51,7 +51,7 @@ class AmazonClientBareStyle {
 	
         ItemSearch itemSearch= new ItemSearch();
         itemSearch.setAWSAccessKeyId(accessID);
-	itemSearch.setAssociateTag("kalin");
+	itemSearch.setAssociateTag("andres");
         itemSearch.getRequest().add(request);
 
         // Invoke service operation and get response.
